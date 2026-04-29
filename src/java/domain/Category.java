@@ -8,4 +8,12 @@ public class Category {
         this.type = type;
         this.description = description;
     }
+
+    public ClothingType getType() {
+        return type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }
