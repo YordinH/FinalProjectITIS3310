@@ -2,6 +2,7 @@ import contracts.IClothingRepository;
 import contracts.IRandomizer;
 import domain.*;
 import repositories.ClothingRepository;
+import services.ClothingFactory;
 import services.RandomOutfitGenerator;
 
 import java.util.ArrayList;
@@ -72,28 +73,21 @@ public class Program {
             return;
         }
 
-        ClothingItem item;
+        ClothingType clothingType;
+        String subtypePrompt;
         switch (typeInput) {
-            case "1":
-                System.out.print("Sleeve length: ");
-                item = new Top(nextId++, 1, name, "", color, season, scanner.nextLine().trim());
-                break;
-            case "2":
-                System.out.print("Pant length: ");
-                item = new Bottoms(nextId++, 1, name, "", color, season, scanner.nextLine().trim());
-                break;
-            case "3":
-                System.out.print("Shoe type: ");
-                item = new Footwear(nextId++, 1, name, "", color, season, scanner.nextLine().trim());
-                break;
-            case "4":
-                System.out.print("Brim type: ");
-                item = new Headwear(nextId++, 1, name, "", color, season, scanner.nextLine().trim());
-                break;
+            case "1": clothingType = ClothingType.TOP;      subtypePrompt = "Sleeve length: "; break;
+            case "2": clothingType = ClothingType.BOTTOMS;  subtypePrompt = "Pant length: ";   break;
+            case "3": clothingType = ClothingType.FOOTWEAR; subtypePrompt = "Shoe type: ";     break;
+            case "4": clothingType = ClothingType.HEADWEAR; subtypePrompt = "Brim type: ";     break;
             default:
                 System.out.println("Invalid type.");
                 return;
         }
+
+        System.out.print(subtypePrompt);
+        String subtypeAttr = scanner.nextLine().trim();
+        ClothingItem item = ClothingFactory.create(clothingType, nextId++, 1, name, "", color, season, subtypeAttr);
 
         repo.save(item);
         System.out.println(item.getDisplayLabel() + " added.");
