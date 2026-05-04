@@ -120,9 +120,9 @@ public class Program {
     }
 
     static void seedData(IClothingRepository repo) {
-        repo.save(new Top(nextId++, 1, "White T-Shirt", "", "White", Season.Summer, "Short"));
-        repo.save(new Bottoms(nextId++, 1, "Blue Jeans", "", "Blue", Season.Fall, "Full"));
-        repo.save(new Footwear(nextId++, 1, "White Sneakers", "", "White", Season.Summer, "Sneaker"));
-        repo.save(new Headwear(nextId++, 1, "Baseball Cap", "", "Black", Season.Summer, "Curved"));
+        repo.save(ClothingFactory.create(ClothingType.TOP,      nextId++, 1, "White T-Shirt",   "", "White", Season.Summer, "Short"));
+        repo.save(ClothingFactory.create(ClothingType.BOTTOMS,  nextId++, 1, "Blue Jeans",       "", "Blue",  Season.Fall,   "Full"));
+        repo.save(ClothingFactory.create(ClothingType.FOOTWEAR, nextId++, 1, "White Sneakers",   "", "White", Season.Summer, "Sneaker"));
+        repo.save(ClothingFactory.create(ClothingType.HEADWEAR, nextId++, 1, "Baseball Cap",     "", "Black", Season.Summer, "Curved"));
     }
 }
