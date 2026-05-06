@@ -1,0 +1,5 @@
+*.class
+src/java/out/
+wardrobe.json
+imported.txt
+wardrobe/
