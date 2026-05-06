@@ -386,7 +386,7 @@ public class Program {
 
             ClothingItem item = ClothingFactory.create(
                     clothingType, nextId++, currentUser.getId(), name,
-                    processed.getAbsolutePath(), color, season, subtypeAttr);
+                    processed.getPath(), color, season, subtypeAttr);
             repo.save(item);
             fileService.markImported(file.getName());
             imageViewer.close();
