@@ -209,7 +209,8 @@ public class Program {
             return;
         }
         for (ClothingItem item : items) {
-            System.out.println("  [" + item.getCategory().getType() + "] " + item.getDisplayLabel());
+            System.out.println("  [" + item.getCategory().getType() + "] "
+                    + item.getDisplayLabel() + " (worn " + item.getWearCount() + "x)");
         }
     }
 

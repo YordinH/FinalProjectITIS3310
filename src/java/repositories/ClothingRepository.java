@@ -1,7 +1,6 @@
 package repositories;
 
 import contracts.IClothingRepository;
-import contracts.IFileService;
 import domain.ClothingItem;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +10,6 @@ import java.util.List;
 public class ClothingRepository implements IClothingRepository {
     private static ClothingRepository instance;
     private Map<Integer, ClothingItem> items;
-    private IFileService fileService;
 
     private ClothingRepository() {
         this.items = new HashMap<>();
@@ -53,9 +51,5 @@ public class ClothingRepository implements IClothingRepository {
         return result;
     }
 
-    public void loadFromDisk() {
-    }
 
-    public void persistToDisk() {
-    }
 }
