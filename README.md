@@ -8,10 +8,10 @@ Requires Java 11+
 
 ```bash
 # Compile
-javac -d src/java/out $(find src/java -name "*.java" | grep -v out)
+javac -cp "lib/*" -d src/java/out $(find src/java -name "*.java" | grep -v out)
 
 # Run
-java -cp src/java/out Program
+java -cp "src/java/out:lib/*" Program
 ```
 
 The program loads 4 sample items on startup. Use the numbered menu to add clothing, view your wardrobe, or generate a random outfit.
