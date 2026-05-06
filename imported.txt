@@ -1,0 +1,8 @@
+jeans1.jpg
+shoes1.jpg
+shoes2.jpg
+hat1.jpg
+hat2.jpg
+pants1.jpg
+shirt2.jpg
+shirt1.jpg

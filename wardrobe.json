@@ -1,0 +1,172 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Wes",
+      "role": "Client"
+    },
+    {
+      "id": 2,
+      "name": "Admin1",
+      "role": "Admin"
+    }
+  ],
+  "items": [
+    {
+      "id": 1,
+      "ownerId": 1,
+      "name": "White T-Shirt",
+      "imageFilePath": "",
+      "color": "White",
+      "season": "Summer",
+      "type": "TOP",
+      "subtypeAttr": "Short",
+      "favorite": false,
+      "wearCount": 0,
+      "tags": []
+    },
+    {
+      "id": 2,
+      "ownerId": 1,
+      "name": "Blue Jeans",
+      "imageFilePath": "",
+      "color": "Blue",
+      "season": "Fall",
+      "type": "BOTTOMS",
+      "subtypeAttr": "Full",
+      "favorite": false,
+      "wearCount": 0,
+      "tags": []
+    },
+    {
+      "id": 3,
+      "ownerId": 1,
+      "name": "White Sneakers",
+      "imageFilePath": "",
+      "color": "White",
+      "season": "Summer",
+      "type": "FOOTWEAR",
+      "subtypeAttr": "Sneaker",
+      "favorite": false,
+      "wearCount": 0,
+      "tags": []
+    },
+    {
+      "id": 4,
+      "ownerId": 1,
+      "name": "Baseball Cap",
+      "imageFilePath": "",
+      "color": "Black",
+      "season": "Summer",
+      "type": "HEADWEAR",
+      "subtypeAttr": "Curved",
+      "favorite": false,
+      "wearCount": 0,
+      "tags": []
+    },
+    {
+      "id": 5,
+      "ownerId": 1,
+      "name": "Vintage Jeans",
+      "imageFilePath": "/Users/w/Documents/Classes/OOP/FinalProject/FinalProject/wardrobe/jeans1_nobg.png",
+      "color": "Blue",
+      "season": "Fall",
+      "type": "BOTTOMS",
+      "subtypeAttr": "32",
+      "favorite": false,
+      "wearCount": 0,
+      "tags": []
+    },
+    {
+      "id": 6,
+      "ownerId": 1,
+      "name": "Dunks",
+      "imageFilePath": "/Users/w/Documents/Classes/OOP/FinalProject/FinalProject/wardrobe/shoes1_nobg.png",
+      "color": "Green",
+      "season": "Spring",
+      "type": "FOOTWEAR",
+      "subtypeAttr": "Sneakers",
+      "favorite": false,
+      "wearCount": 0,
+      "tags": []
+    },
+    {
+      "id": 7,
+      "ownerId": 1,
+      "name": "Jordan 1 Low",
+      "imageFilePath": "/Users/w/Documents/Classes/OOP/FinalProject/FinalProject/wardrobe/shoes2_nobg.png",
+      "color": "Blue",
+      "season": "Spring",
+      "type": "FOOTWEAR",
+      "subtypeAttr": "Sneakers",
+      "favorite": false,
+      "wearCount": 0,
+      "tags": []
+    },
+    {
+      "id": 8,
+      "ownerId": 1,
+      "name": "Seahorse Hat",
+      "imageFilePath": "/Users/w/Documents/Classes/OOP/FinalProject/FinalProject/wardrobe/hat1_nobg.png",
+      "color": "Red",
+      "season": "Summer",
+      "type": "HEADWEAR",
+      "subtypeAttr": "Normal",
+      "favorite": false,
+      "wearCount": 0,
+      "tags": []
+    },
+    {
+      "id": 9,
+      "ownerId": 1,
+      "name": "Aspen Hat",
+      "imageFilePath": "/Users/w/Documents/Classes/OOP/FinalProject/FinalProject/wardrobe/hat2_nobg.png",
+      "color": "Maroon",
+      "season": "Summer",
+      "type": "HEADWEAR",
+      "subtypeAttr": "Normal",
+      "favorite": false,
+      "wearCount": 0,
+      "tags": []
+    },
+    {
+      "id": 10,
+      "ownerId": 1,
+      "name": "Painter Pants",
+      "imageFilePath": "/Users/w/Documents/Classes/OOP/FinalProject/FinalProject/wardrobe/pants1_nobg.png",
+      "color": "White",
+      "season": "Fall",
+      "type": "BOTTOMS",
+      "subtypeAttr": "32",
+      "favorite": false,
+      "wearCount": 0,
+      "tags": []
+    },
+    {
+      "id": 11,
+      "ownerId": 1,
+      "name": "Football Shirt",
+      "imageFilePath": "/Users/w/Documents/Classes/OOP/FinalProject/FinalProject/wardrobe/shirt2_nobg.png",
+      "color": "White",
+      "season": "Summer",
+      "type": "TOP",
+      "subtypeAttr": "6",
+      "favorite": false,
+      "wearCount": 0,
+      "tags": []
+    },
+    {
+      "id": 12,
+      "ownerId": 1,
+      "name": "Mechanic Shirt",
+      "imageFilePath": "/Users/w/Documents/Classes/OOP/FinalProject/FinalProject/wardrobe/shirt1_nobg.png",
+      "color": "Black",
+      "season": "Summer",
+      "type": "TOP",
+      "subtypeAttr": "5",
+      "favorite": false,
+      "wearCount": 0,
+      "tags": []
+    }
+  ]
+}

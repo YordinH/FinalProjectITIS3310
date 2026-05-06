@@ -67,6 +67,22 @@ public abstract class ClothingItem {
         tags.remove(tag);
     }
 
+    public String getImageFilePath() {
+        return imageFilePath;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public Season getSeason() {
+        return season;
+    }
+
+    public int getWearCount() {
+        return wearCount;
+    }
+
     // Subclasses return a formatted label for display (e.g. "White T-Shirt [Short Sleeve]")
     public abstract String getDisplayLabel();
 

@@ -44,6 +44,15 @@ public class ClothingRepository implements IClothingRepository {
         return new ArrayList<>(items.values());
     }
 
+    @Override
+    public List<ClothingItem> getByOwner(int ownerId) {
+        List<ClothingItem> result = new ArrayList<>();
+        for (ClothingItem item : items.values()) {
+            if (item.getOwnerId() == ownerId) result.add(item);
+        }
+        return result;
+    }
+
     public void loadFromDisk() {
     }
 

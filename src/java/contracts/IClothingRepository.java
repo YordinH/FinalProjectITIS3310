@@ -8,4 +8,5 @@ public interface IClothingRepository {
     void remove(int itemId);
     ClothingItem getById(int itemId);
     List<ClothingItem> getAll();
+    List<ClothingItem> getByOwner(int ownerId);
 }
