@@ -74,7 +74,7 @@
       "type": "BOTTOMS",
       "subtypeAttr": "32",
       "favorite": false,
-      "wearCount": 0,
+      "wearCount": 1,
       "tags": []
     },
     {
@@ -100,7 +100,7 @@
       "type": "FOOTWEAR",
       "subtypeAttr": "Sneakers",
       "favorite": false,
-      "wearCount": 0,
+      "wearCount": 1,
       "tags": []
     },
     {
@@ -126,7 +126,7 @@
       "type": "HEADWEAR",
       "subtypeAttr": "Normal",
       "favorite": false,
-      "wearCount": 0,
+      "wearCount": 1,
       "tags": []
     },
     {
@@ -152,7 +152,7 @@
       "type": "TOP",
       "subtypeAttr": "6",
       "favorite": false,
-      "wearCount": 0,
+      "wearCount": 1,
       "tags": []
     },
     {
@@ -164,6 +164,19 @@
       "season": "Summer",
       "type": "TOP",
       "subtypeAttr": "5",
+      "favorite": false,
+      "wearCount": 0,
+      "tags": []
+    },
+    {
+      "id": 13,
+      "ownerId": 1,
+      "name": "Painter pants",
+      "imageFilePath": "wardrobe/pants3_nobg.png",
+      "color": "White",
+      "season": "Fall",
+      "type": "BOTTOMS",
+      "subtypeAttr": "32",
       "favorite": false,
       "wearCount": 0,
       "tags": []

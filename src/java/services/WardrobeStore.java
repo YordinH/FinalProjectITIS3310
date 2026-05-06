@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +35,7 @@ public class WardrobeStore {
             obj.addProperty("id", item.getId());
             obj.addProperty("ownerId", item.getOwnerId());
             obj.addProperty("name", item.getName());
-            obj.addProperty("imageFilePath", item.getImageFilePath() != null ? item.getImageFilePath() : "");
+            obj.addProperty("imageFilePath", toRelativePath(item.getImageFilePath()));
             obj.addProperty("color", item.getColor());
             obj.addProperty("season", item.getSeason().name());
             obj.addProperty("type", item.getCategory().getType().name());
@@ -118,7 +120,7 @@ public class WardrobeStore {
                 int id = obj.get("id").getAsInt();
                 int ownerId = obj.get("ownerId").getAsInt();
                 String name = obj.get("name").getAsString();
-                String imageFilePath = obj.get("imageFilePath").getAsString();
+                String imageFilePath = toPortablePath(obj.get("imageFilePath").getAsString());
                 String color = obj.get("color").getAsString();
                 Season season = Season.valueOf(obj.get("season").getAsString());
                 ClothingType type = ClothingType.valueOf(obj.get("type").getAsString());
@@ -159,5 +161,24 @@ public class WardrobeStore {
             e.printStackTrace();
         }
         return outfits;
+    }
+
+    private static String toRelativePath(String path) {
+        if (path == null || path.isEmpty()) return "";
+        Path p = Paths.get(path);
+        if (p.isAbsolute()) {
+            return "wardrobe" + File.separator + p.getFileName().toString();
+        }
+        return path;
+    }
+
+    private static String toPortablePath(String path) {
+        if (path == null || path.isEmpty()) return "";
+        Path p = Paths.get(path);
+        if (p.isAbsolute()) {
+            String relative = "wardrobe" + File.separator + p.getFileName().toString();
+            if (new File(relative).exists()) return relative;
+        }
+        return path;
     }
 }

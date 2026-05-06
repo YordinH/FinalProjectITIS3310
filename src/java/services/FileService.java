@@ -24,9 +24,12 @@ public class FileService implements IFileService {
         if (files == null) return result;
         for (File f : files) {
             String name = f.getName().toLowerCase();
-            if ((name.endsWith(".jpg") || name.endsWith(".jpeg") || name.endsWith(".png"))
-                    && !imported.contains(f.getName())) {
-                result.add(f);
+            if ((name.endsWith(".jpg") || name.endsWith(".jpeg") || name.endsWith(".png"))) {
+                String baseName = f.getName().replaceAll("\\.[^.]+$", "");
+                File processed = new File(WARDROBE_DIR, baseName + "_nobg.png");
+                if (!imported.contains(f.getName()) || !processed.exists()) {
+                    result.add(f);
+                }
             }
         }
         return result;

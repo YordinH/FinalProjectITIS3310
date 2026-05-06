@@ -6,3 +6,4 @@ hat2.jpg
 pants1.jpg
 shirt2.jpg
 shirt1.jpg
+pants3.jpg
