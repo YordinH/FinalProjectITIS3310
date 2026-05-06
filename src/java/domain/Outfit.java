@@ -5,14 +5,16 @@ import java.util.List;
 
 public class Outfit {
     private int id;
+    private int ownerId;
     private String name;
     private boolean favorite;
     private int wearCount;
     private List<String> tags;
     private List<ClothingItem> items;
 
-    public Outfit(int id, String name) {
+    public Outfit(int id, int ownerId, String name) {
         this.id = id;
+        this.ownerId = ownerId;
         this.name = name;
         this.favorite = false;
         this.wearCount = 0;
@@ -22,6 +24,10 @@ public class Outfit {
 
     public int getId() {
         return id;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
     }
 
     public String getName() {
@@ -38,6 +44,14 @@ public class Outfit {
 
     public void removeItem(ClothingItem item) {
         items.remove(item);
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public int getWearCount() {
+        return wearCount;
     }
 
     public void markFavorite() {

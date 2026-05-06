@@ -8,4 +8,5 @@ public interface IOutfitRepository {
     void remove(int outfitId);
     Outfit getById(int outfitId);
     List<Outfit> getAll();
+    List<Outfit> getByOwner(int ownerId);
 }

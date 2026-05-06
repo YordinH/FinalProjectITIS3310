@@ -1,6 +1,7 @@
 package services;
 
 import com.google.gson.*;
+import contracts.IClothingRepository;
 import domain.*;
 import java.io.File;
 import java.io.FileReader;
@@ -13,7 +14,7 @@ public class WardrobeStore {
     private static final String STORE_FILE = "wardrobe.json";
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    public void save(List<User> users, List<ClothingItem> items) {
+    public void save(List<User> users, List<ClothingItem> items, List<Outfit> outfits) {
         JsonObject root = new JsonObject();
 
         JsonArray usersArr = new JsonArray();
@@ -45,6 +46,21 @@ public class WardrobeStore {
             arr.add(obj);
         }
         root.add("items", arr);
+
+        JsonArray outfitsArr = new JsonArray();
+        for (Outfit outfit : outfits) {
+            JsonObject obj = new JsonObject();
+            obj.addProperty("id", outfit.getId());
+            obj.addProperty("ownerId", outfit.getOwnerId());
+            obj.addProperty("name", outfit.getName());
+            obj.addProperty("favorite", outfit.isFavorite());
+            obj.addProperty("wearCount", outfit.getWearCount());
+            JsonArray itemIds = new JsonArray();
+            for (ClothingItem item : outfit.getItems()) itemIds.add(item.getId());
+            obj.add("itemIds", itemIds);
+            outfitsArr.add(obj);
+        }
+        root.add("outfits", outfitsArr);
 
         try (FileWriter fw = new FileWriter(STORE_FILE)) {
             gson.toJson(root, fw);
@@ -116,5 +132,32 @@ public class WardrobeStore {
             e.printStackTrace();
         }
         return items;
+    }
+
+    public List<Outfit> loadOutfits(IClothingRepository clothingRepo) {
+        List<Outfit> outfits = new ArrayList<>();
+        File f = new File(STORE_FILE);
+        if (!f.exists()) return outfits;
+        try (FileReader fr = new FileReader(f)) {
+            JsonElement root = gson.fromJson(fr, JsonElement.class);
+            if (!root.isJsonObject()) return outfits;
+            JsonObject rootObj = root.getAsJsonObject();
+            if (!rootObj.has("outfits")) return outfits;
+            for (JsonElement el : rootObj.getAsJsonArray("outfits")) {
+                JsonObject obj = el.getAsJsonObject();
+                int id = obj.get("id").getAsInt();
+                int ownerId = obj.get("ownerId").getAsInt();
+                String name = obj.get("name").getAsString();
+                Outfit outfit = new Outfit(id, ownerId, name);
+                for (JsonElement idEl : obj.get("itemIds").getAsJsonArray()) {
+                    ClothingItem item = clothingRepo.getById(idEl.getAsInt());
+                    if (item != null) outfit.addItem(item);
+                }
+                outfits.add(outfit);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return outfits;
     }
 }

@@ -1,9 +1,11 @@
 import contracts.IClothingRepository;
 import contracts.IFileService;
+import contracts.IOutfitRepository;
 import contracts.IRandomizer;
 import contracts.IUserRepository;
 import domain.*;
 import repositories.ClothingRepository;
+import repositories.OutfitRepository;
 import repositories.UserRepository;
 import services.ClothingFactory;
 import services.FileService;
@@ -21,11 +23,13 @@ public class Program {
     static final Scanner scanner = new Scanner(System.in);
     static int nextId = 1;
     static int nextUserId = 1;
+    static int nextOutfitId = 1;
     static User currentUser;
 
     public static void main(String[] args) {
         IClothingRepository clothingRepo = ClothingRepository.getInstance();
         IUserRepository userRepo = UserRepository.getInstance();
+        IOutfitRepository outfitRepo = OutfitRepository.getInstance();
         IRandomizer randomizer = new RandomOutfitGenerator();
         IFileService fileService = new FileService();
         ImageViewer imageViewer = new ImageViewer();
@@ -42,6 +46,11 @@ public class Program {
         for (ClothingItem item : savedItems) {
             clothingRepo.save(item);
             if (item.getId() >= nextId) nextId = item.getId() + 1;
+        }
+
+        for (Outfit outfit : store.loadOutfits(clothingRepo)) {
+            outfitRepo.save(outfit);
+            if (outfit.getId() >= nextOutfitId) nextOutfitId = outfit.getId() + 1;
         }
 
         System.out.println("Welcome to the Virtual Wardrobe System.");
@@ -66,25 +75,26 @@ public class Program {
                 switch (choice) {
                     case "1": addClothingItem(clothingRepo); break;
                     case "2": viewWardrobe(clothingRepo); break;
-                    case "3": generateOutfit(clothingRepo, randomizer, outfitViewer); break;
+                    case "3": generateOutfit(clothingRepo, outfitRepo, randomizer, outfitViewer); break;
                     case "4": importClothing(clothingRepo, fileService, imageViewer); break;
-                    case "5": sessionRunning = false; break;
-                    case "6": appRunning = false; sessionRunning = false; break;
-                    case "7":
+                    case "5": viewSavedOutfits(outfitRepo); break;
+                    case "6": sessionRunning = false; break;
+                    case "7": appRunning = false; sessionRunning = false; break;
+                    case "8":
                         if (currentUser.getRole().equals("Admin"))
                             viewAllWardrobes(clothingRepo, userRepo);
                         else System.out.println("Invalid option.");
                         break;
-                    case "8":
+                    case "9":
                         if (currentUser.getRole().equals("Admin"))
-                            generateOutfitFromAll(clothingRepo, randomizer, outfitViewer);
+                            generateOutfitFromAll(clothingRepo, outfitRepo, randomizer, outfitViewer);
                         else System.out.println("Invalid option.");
                         break;
                     default: System.out.println("Invalid option."); break;
                 }
             }
 
-            store.save(userRepo.getAll(), clothingRepo.getAll());
+            store.save(userRepo.getAll(), clothingRepo.getAll(), outfitRepo.getAll());
         }
 
         outfitViewer.dispose();
@@ -135,12 +145,13 @@ public class Program {
         System.out.println("* 2. View wardrobe                 *");
         System.out.println("* 3. Generate random outfit        *");
         System.out.println("* 4. Import from images/           *");
-        System.out.println("* 5. Sign out                      *");
-        System.out.println("* 6. Quit                          *");
+        System.out.println("* 5. View saved outfits            *");
+        System.out.println("* 6. Sign out                      *");
+        System.out.println("* 7. Quit                          *");
         if (currentUser.getRole().equals("Admin")) {
             System.out.println("*--- Admin -------------------------*");
-            System.out.println("* 7. View all wardrobes            *");
-            System.out.println("* 8. Generate outfit from all      *");
+            System.out.println("* 8. View all wardrobes            *");
+            System.out.println("* 9. Generate outfit from all      *");
         }
         System.out.println("************************************");
     }
@@ -202,15 +213,13 @@ public class Program {
         }
     }
 
-    static void generateOutfit(IClothingRepository repo, IRandomizer randomizer, OutfitViewer viewer) {
+    static void generateOutfit(IClothingRepository repo, IOutfitRepository outfitRepo,
+                               IRandomizer randomizer, OutfitViewer viewer) {
         System.out.println("\nGenerating random outfit...");
-        List<ClothingItem> all = repo.getByOwner(currentUser.getId());
         List<ClothingItem> pool = new ArrayList<>();
-        for (ClothingItem item : all) {
+        for (ClothingItem item : repo.getByOwner(currentUser.getId())) {
             String path = item.getImageFilePath();
-            if (path != null && !path.isEmpty() && new File(path).exists()) {
-                pool.add(item);
-            }
+            if (path != null && !path.isEmpty() && new File(path).exists()) pool.add(item);
         }
         if (pool.isEmpty()) {
             System.out.println("No imported items with images. Use option 4 to import clothing.");
@@ -222,6 +231,35 @@ public class Program {
             System.out.println("  - " + item.getDisplayLabel());
         }
         viewer.update(outfit);
+
+        System.out.print("Save this outfit? (y/n): ");
+        if (scanner.nextLine().trim().equalsIgnoreCase("y")) {
+            System.out.print("Name: ");
+            String name = scanner.nextLine().trim();
+            if (name.isEmpty()) name = "Outfit " + nextOutfitId;
+            Outfit saved = new Outfit(nextOutfitId++, currentUser.getId(), name);
+            for (ClothingItem item : outfit.getItems()) {
+                saved.addItem(item);
+                item.incrementWearCount();
+            }
+            outfitRepo.save(saved);
+            System.out.println("\"" + saved.getName() + "\" saved.");
+        }
+    }
+
+    static void viewSavedOutfits(IOutfitRepository outfitRepo) {
+        System.out.println("\nSaved Outfits:");
+        List<Outfit> outfits = outfitRepo.getByOwner(currentUser.getId());
+        if (outfits.isEmpty()) {
+            System.out.println("No saved outfits.");
+            return;
+        }
+        for (Outfit outfit : outfits) {
+            System.out.println("  [" + outfit.getId() + "] " + outfit.getName());
+            for (ClothingItem item : outfit.getItems()) {
+                System.out.println("    - " + item.getDisplayLabel());
+            }
+        }
     }
 
     static void importClothing(IClothingRepository repo, IFileService fileService, ImageViewer imageViewer) {
@@ -308,14 +346,13 @@ public class Program {
         }
     }
 
-    static void generateOutfitFromAll(IClothingRepository repo, IRandomizer randomizer, OutfitViewer viewer) {
+    static void generateOutfitFromAll(IClothingRepository repo, IOutfitRepository outfitRepo,
+                                      IRandomizer randomizer, OutfitViewer viewer) {
         System.out.println("\nGenerating outfit from all users' clothing...");
         List<ClothingItem> pool = new ArrayList<>();
         for (ClothingItem item : repo.getAll()) {
             String path = item.getImageFilePath();
-            if (path != null && !path.isEmpty() && new File(path).exists()) {
-                pool.add(item);
-            }
+            if (path != null && !path.isEmpty() && new File(path).exists()) pool.add(item);
         }
         if (pool.isEmpty()) {
             System.out.println("No imported items with images across any wardrobe.");
@@ -327,6 +364,20 @@ public class Program {
             System.out.println("  - " + item.getDisplayLabel());
         }
         viewer.update(outfit);
+
+        System.out.print("Save this outfit? (y/n): ");
+        if (scanner.nextLine().trim().equalsIgnoreCase("y")) {
+            System.out.print("Name: ");
+            String name = scanner.nextLine().trim();
+            if (name.isEmpty()) name = "Outfit " + nextOutfitId;
+            Outfit saved = new Outfit(nextOutfitId++, currentUser.getId(), name);
+            for (ClothingItem item : outfit.getItems()) {
+                saved.addItem(item);
+                item.incrementWearCount();
+            }
+            outfitRepo.save(saved);
+            System.out.println("\"" + saved.getName() + "\" saved.");
+        }
     }
 
     static void seedData(IClothingRepository repo, int ownerId) {

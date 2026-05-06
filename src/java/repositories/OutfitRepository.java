@@ -41,4 +41,13 @@ public class OutfitRepository implements IOutfitRepository {
     public List<Outfit> getAll() {
         return new ArrayList<>(outfits.values());
     }
+
+    @Override
+    public List<Outfit> getByOwner(int ownerId) {
+        List<Outfit> result = new ArrayList<>();
+        for (Outfit o : outfits.values()) {
+            if (o.getOwnerId() == ownerId) result.add(o);
+        }
+        return result;
+    }
 }

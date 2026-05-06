@@ -17,7 +17,7 @@ public class RandomOutfitGenerator implements IRandomizer {
 
     @Override
     public Outfit generate(List<ClothingItem> pool, List<ClothingItem> locked, List<ClothingType> disabled) {
-        Outfit outfit = new Outfit(0, "Random Outfit");
+        Outfit outfit = new Outfit(0, 0, "Random Outfit");
 
         List<ClothingType> filled = new ArrayList<>();
         for (ClothingItem item : locked) {
