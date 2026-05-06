@@ -168,5 +168,20 @@
       "wearCount": 0,
       "tags": []
     }
+  ],
+  "outfits": [
+    {
+      "id": 1,
+      "ownerId": 1,
+      "name": "White + Red outfit",
+      "favorite": false,
+      "wearCount": 0,
+      "itemIds": [
+        11,
+        10,
+        6,
+        8
+      ]
+    }
   ]
 }

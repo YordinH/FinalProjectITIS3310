@@ -14,7 +14,8 @@ public class Headwear extends ClothingItem {
     }
 
     @Override
-    public String getSubtypeAttribute() {
-        return brimType;
-    }
+    public String getSubtypeAttribute() { return brimType; }
+
+    @Override
+    public void setSubtypeAttribute(String value) { this.brimType = value; }
 }

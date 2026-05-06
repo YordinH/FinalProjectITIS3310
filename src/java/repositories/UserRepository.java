@@ -24,6 +24,11 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
+    public void remove(int id) {
+        users.remove(id);
+    }
+
+    @Override
     public User getById(int id) {
         return users.get(id);
     }

@@ -14,7 +14,8 @@ public class Bottoms extends ClothingItem {
     }
 
     @Override
-    public String getSubtypeAttribute() {
-        return pantLength;
-    }
+    public String getSubtypeAttribute() { return pantLength; }
+
+    @Override
+    public void setSubtypeAttribute(String value) { this.pantLength = value; }
 }

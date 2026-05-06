@@ -84,8 +84,11 @@ public abstract class ClothingItem {
     }
 
     // Subclasses return a formatted label for display (e.g. "White T-Shirt [Short Sleeve]")
-    public abstract String getDisplayLabel();
+    public void setName(String name) { this.name = name; }
+    public void setColor(String color) { this.color = color; }
+    public void setSeason(Season season) { this.season = season; }
 
-    // Subclasses return their unique subtype attribute value
+    public abstract String getDisplayLabel();
     public abstract String getSubtypeAttribute();
+    public abstract void setSubtypeAttribute(String value);
 }

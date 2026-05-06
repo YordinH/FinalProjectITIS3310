@@ -14,7 +14,8 @@ public class Footwear extends ClothingItem {
     }
 
     @Override
-    public String getSubtypeAttribute() {
-        return shoeType;
-    }
+    public String getSubtypeAttribute() { return shoeType; }
+
+    @Override
+    public void setSubtypeAttribute(String value) { this.shoeType = value; }
 }

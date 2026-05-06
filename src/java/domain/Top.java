@@ -14,7 +14,8 @@ public class Top extends ClothingItem {
     }
 
     @Override
-    public String getSubtypeAttribute() {
-        return sleeveLength;
-    }
+    public String getSubtypeAttribute() { return sleeveLength; }
+
+    @Override
+    public void setSubtypeAttribute(String value) { this.sleeveLength = value; }
 }
